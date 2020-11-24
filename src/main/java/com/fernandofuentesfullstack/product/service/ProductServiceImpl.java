@@ -3,15 +3,17 @@ package com.fernandofuentesfullstack.product.service;
 import com.fernandofuentesfullstack.product.entity.Category;
 import com.fernandofuentesfullstack.product.entity.Product;
 import com.fernandofuentesfullstack.product.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public List<Product> listAllProduct() {
