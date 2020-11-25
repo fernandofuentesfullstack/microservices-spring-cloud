@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Optional;
 
 @SpringBootTest
-public class ProductServiceMockTest {
+class ProductServiceMockTest {
 
     @Mock
     private ProductRepository productRepository;
@@ -40,13 +40,13 @@ public class ProductServiceMockTest {
     }
 
     @Test
-    public void whenValidGetID_thenReturnProduct() {
+    void whenValidGetID_thenReturnProduct() {
         Product found = productService.getProduct(1L);
         Assertions.assertThat(found.getName()).isEqualTo("Computer");
     }
 
     @Test
-    public void whenValidUpdateStock_thenReturnNewStock() {
+    void whenValidUpdateStock_thenReturnNewStock() {
         Product newStock = productService.updateStock(1L, Double.parseDouble("8"));
         Assertions.assertThat(newStock.getStock()).isEqualTo(13);
     }
