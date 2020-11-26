@@ -21,7 +21,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> listProduct(@RequestParam(name = "categoryId", required = false) Long categoryId ) {
+    public ResponseEntity<List<Product>> listProduct (@RequestParam(name = "categoryId", required = false) Long categoryId ) {
         List<Product> products = new ArrayList<>();
         if (null == categoryId) {
             products = productService.listAllProduct();
@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/{productId}")
-    public ResponseEntity<Product> getProduct(@PathVariable("productId") Long productId) {
+    public ResponseEntity<Product> getProduct (@PathVariable("productId") Long productId) {
         Product product = productService.getProduct(productId);
         if (null == product) {
             return ResponseEntity.notFound().build();
@@ -47,13 +47,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct (@RequestBody Product product) {
         Product productCreate = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @PutMapping(value = "/{productId}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("productId") Long productId, @RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct (@PathVariable("productId") Long productId, @RequestBody Product product) {
         product.setId(productId);
         Product productDB = productService.updateProduct(product);
         if (productDB == null) {
@@ -62,14 +62,24 @@ public class ProductController {
         return ResponseEntity.ok(productDB);
     }
 
-
     @DeleteMapping(value = "/{productId}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable("productId") Long productId) {
+    public ResponseEntity<Product> deleteProduct (@PathVariable("productId") Long productId) {
         Product productDelete = productService.deleteProduct(productId);
         if (productDelete == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(productDelete);
+    }
+
+    @PutMapping(value = "/{productId}/stock")
+    public ResponseEntity<Product> updateStockProduct (
+            @PathVariable("productId") Long productId, @RequestParam(name = "quantity", required = true) Double quantity
+    ) {
+        Product product = productService.updateStock(productId, quantity);
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(product);
     }
 
 }
